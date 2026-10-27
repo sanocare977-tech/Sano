@@ -24,13 +24,17 @@ export type CategoryId =
   | 'feeding'
   | 'sleep_nursery'
   | 'play_learning'
-  | 'outdoor_safety';
+  | 'outdoor_safety'
+  | 'hospital_bag'
+  | 'gift_hampers'
+  | 'diapering';
 
 export interface Category {
   id: CategoryId;
   name: string;
   iconName: string;
   description: string;
+  brandScope?: 'sano' | 'sano_care' | 'both';
 }
 
 export interface ProductVariant {
@@ -47,6 +51,7 @@ export interface Product {
   priceNPR: number;
   originalPriceNPR?: number;
   image: string;
+  galleryImages?: string[];
   fallbackGradient: string;
   shortDescription: string;
   materials: string;
@@ -56,6 +61,17 @@ export interface Product {
   bestseller?: boolean;
   variants: ProductVariant[];
   highlights: string[];
+  brand?: string;
+  brandScope?: 'sano' | 'sano_care';
+  hospitalBagPhase?: 'labour_delivery' | 'after_delivery' | 'for_baby';
+  giftRecipient?: 'grandparents' | 'relatives' | 'friends_colleagues' | 'baby_shower';
+}
+
+export interface ChildProfile {
+  name?: string;
+  birthDate?: string;
+  heightCm?: number;
+  gender?: 'all' | 'boy' | 'girl';
 }
 
 export interface CartItem {

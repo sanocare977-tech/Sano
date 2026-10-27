@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Sparkles, Check, ShoppingBag, Plus } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Sparkles, Check, ShoppingBag, Plus, HeartHandshake, Baby, Activity } from 'lucide-react';
 import { HOSPITAL_BAG_CHECKLIST, PRODUCTS } from '../data/products';
 import { Product } from '../types';
 
@@ -14,10 +14,25 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
   onClose,
   onAddProduct,
 }) => {
+  const [activeTab, setActiveTab] = useState<'all' | 'labour_delivery' | 'after_delivery' | 'for_baby'>('all');
+
   if (!isOpen) return null;
 
-  const handleAddAllEssentials = () => {
-    HOSPITAL_BAG_CHECKLIST.forEach((item) => {
+  const tabs = [
+    { id: 'all', label: 'All 3 Categories', icon: Sparkles },
+    { id: 'labour_delivery', label: '1. In Labour (Before Delivery)', icon: Activity },
+    { id: 'after_delivery', label: '2. For Mother (After Delivery)', icon: HeartHandshake },
+    { id: 'for_baby', label: '3. For Newborn Baby', icon: Baby },
+  ];
+
+  const filteredChecklist = HOSPITAL_BAG_CHECKLIST.filter((item) => {
+    if (activeTab === 'all') return true;
+    return item.phase === activeTab;
+  });
+
+  const handleAddPhaseEssentials = (phase?: string) => {
+    const itemsToAdd = HOSPITAL_BAG_CHECKLIST.filter((i) => !phase || phase === 'all' || i.phase === phase);
+    itemsToAdd.forEach((item) => {
       const prod = PRODUCTS.find((p) => p.id === item.includedProductId);
       if (prod && prod.variants[0]) {
         onAddProduct(prod, prod.variants[0].size);
@@ -39,12 +54,12 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
               <span className="font-heading text-xl sm:text-2xl font-bold text-[#1F2A44]">
                 Hospital Bag Checklist
               </span>
-              <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#F5B301] text-[#1F2A44]">
-                Maternity to Day 3
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F5B301] text-[#1F2A44]">
+                3 Core Phases
               </span>
             </div>
             <p className="text-xs sm:text-sm text-[#1F2A44]/75">
-              Tested by pediatric nurses and mothers across Kathmandu hospitals (Norvic, Grande, Teaching, Mediciti).
+              Structured into 3 essential categories tested with pediatric & maternity wards across Kathmandu.
             </p>
           </div>
 
@@ -56,9 +71,31 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
           </button>
         </div>
 
+        {/* 3 Categories Tab Strip */}
+        <div className="px-5 pt-3 pb-2 bg-[#FFF6E9]/40 border-b border-[#1F2A44]/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`px-3 py-1.5 text-xs font-bold rounded-full transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                  isActive
+                    ? 'bg-[#1F2A44] text-[#FFF6E9]'
+                    : 'bg-white border border-[#1F2A44]/15 text-[#1F2A44] hover:bg-[#FFF6E9]'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#F5B301]' : 'text-[#1F2A44]/70'}`} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Content list */}
-        <div className="p-5 sm:p-6 space-y-3 max-h-[60vh] overflow-y-auto">
-          {HOSPITAL_BAG_CHECKLIST.map((chk, index) => {
+        <div className="p-5 sm:p-6 space-y-3 max-h-[55vh] overflow-y-auto">
+          {filteredChecklist.map((chk, index) => {
             const product = PRODUCTS.find((p) => p.id === chk.includedProductId);
             return (
               <div
@@ -70,10 +107,15 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
                     {index + 1}
                   </div>
                   <div>
-                    <strong className="block font-bold text-[#1F2A44] text-sm">
-                      {chk.item}
-                    </strong>
-                    <span className="text-[#1F2A44]/70 block mt-0.5">
+                    <div className="flex items-center gap-2">
+                      <strong className="font-bold text-[#1F2A44] text-sm">
+                        {chk.item}
+                      </strong>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#1F2A44]/10 text-[#1F2A44]">
+                        {chk.phase === 'labour_delivery' ? 'Labor Phase' : chk.phase === 'after_delivery' ? 'Mother Care' : 'Baby Care'}
+                      </span>
+                    </div>
+                    <span className="text-[#1F2A44]/75 block mt-0.5">
                       {chk.reason}
                     </span>
                     {product && (
@@ -103,15 +145,19 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
         {/* Bottom Action */}
         <div className="p-4 sm:p-5 border-t border-[#1F2A44]/10 bg-white flex flex-col sm:flex-row items-center justify-between gap-3">
           <span className="text-xs text-[#1F2A44]/70 text-center sm:text-left">
-            Need all 5 essentials ready for your delivery day?
+            {activeTab === 'all' 
+              ? 'Pack everything ready for delivery day?' 
+              : `Add all items for ${tabs.find(t => t.id === activeTab)?.label}?`}
           </span>
 
           <button
-            onClick={handleAddAllEssentials}
+            onClick={() => handleAddPhaseEssentials(activeTab === 'all' ? undefined : activeTab)}
             className="w-full sm:w-auto px-6 py-2.5 text-xs sm:text-sm font-bold bg-[#1F2A44] text-[#FFF6E9] rounded-full hover:bg-[#1F2A44]/90 flex items-center justify-center gap-2 cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4 text-[#F5B301]" />
-            <span>Add All 5 Items to Bag</span>
+            <span>
+              {activeTab === 'all' ? 'Add All Hospital Essentials' : 'Add This Phase to Bag'}
+            </span>
           </button>
         </div>
       </div>
