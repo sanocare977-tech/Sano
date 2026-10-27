@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-display: "Fredoka", sans-serif;
+  --font-sans: "Nunito", sans-serif;
+
+  --color-cream: #FFF6E9;
+  --color-ink: #1F2A44;
+  --color-marigold: #F5B301;
+  --color-coral: #E8604F;
+  --color-sky: #8FD0EA;
+  --color-leaf: #5DAA7A;
+}
+
+:root {
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1F2A44;
+  background-color: #FFF6E9;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: "Fredoka", cursive, sans-serif;
+  letter-spacing: -0.02em;
+  text-transform: none; /* Brand guideline: Never set headlines in all-caps */
+}
+
+/* Custom scrollbar matching brand warm aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF6E9;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8DFD0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4CABC;
+}
+
+/* Accessible focus ring per brand guidelines: 2px Marigold outline */
+*:focus-visible {
+  outline: 2px solid #F5B301;
+  outline-offset: 2px;
+}

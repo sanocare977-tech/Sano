@@ -1,0 +1,8 @@
+{
+  "name": "sano. - Everything for Little Ones",
+  "description": "Essential maternal, baby, and kids products from pregnancy to 14 years in Nepal with direct WhatsApp checkout and GPS delivery pin.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
