@@ -157,14 +157,39 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Mom &amp; Kid Health</span>
             </button>
 
+            {/* Quick Restock Recurring */}
+            <button
+              onClick={() => {
+                onNavigateToHome();
+                setTimeout(() => onNavigateToSection('quick-restock'), 50);
+              }}
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1"
+            >
+              <span className="text-[#5DAA7A]">🔄</span>
+              <span>Quick Restock</span>
+            </button>
+
+            {/* Try at Doorstep */}
             <button
               onClick={() => {
                 onNavigateToHome();
                 setTimeout(() => onNavigateToSection('why-sano'), 50);
               }}
-              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1"
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1"
             >
-              Store
+              <span>🏬 Try at Doorstep</span>
+            </button>
+
+            {/* Pediatric Q&A Forum */}
+            <button
+              onClick={() => {
+                onNavigateToHome();
+                setTimeout(() => onNavigateToSection('expert-forum'), 50);
+              }}
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1"
+            >
+              <span className="text-[#5DAA7A]">🩺</span>
+              <span>Pediatric Q&amp;A</span>
             </button>
           </nav>
 
@@ -267,11 +292,29 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={() => {
               onNavigateToHome();
+              setTimeout(() => onNavigateToSection('quick-restock'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#5DAA7A]/15 hover:bg-[#5DAA7A]/25 text-[#1F2A44] transition-colors cursor-pointer flex items-center gap-1"
+          >
+            🔄 Quick Restock
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
               setTimeout(() => onNavigateToSection('why-sano'), 50);
             }}
             className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer"
           >
-            🏬 Kathmandu Store
+            🏬 Try at Doorstep &amp; Stores
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('expert-forum'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer flex items-center gap-1"
+          >
+            🩺 Pediatric Q&amp;A
           </button>
         </div>
       </div>

@@ -14,17 +14,34 @@ export const PasniInvitationGenerator: React.FC = () => {
   // Formatted event text for WhatsApp message
   const whatsappInviteText = `🚩 *Pasni (Rice Feeding Ceremony) Celebration Invite* 🚩\n\nNamaste! We warmly invite you and your family to join us as our little darling *${childName}* tastes his/her first auspicious solid food!\n\n🗓️ *Date*: ${eventDate}\n⏰ *Time*: ${eventTime}\n📍 *Venue*: ${venueName}\n\nHosted with love & blessings by ${parentNames}.\nRSVP: ${rsvpPhone}\n\n*Created via sano. Pasni Celebrations Hub*`;
 
-  const handleCopyText = () => {
-    navigator.clipboard.writeText(whatsappInviteText);
-    setCopied(true);
+  const handleCopyText = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(whatsappInviteText);
+        setCopied(true);
+      } else {
+        throw new Error('Clipboard API not available');
+      }
+    } catch {
+      // Fallback for iframes or older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = whatsappInviteText;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+      } catch (err) {
+        console.warn('Failed to copy text', err);
+      }
+      document.body.removeChild(textarea);
+    }
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleShareWhatsApp = () => {
-    const encodedText = encodeURIComponent(whatsappInviteText);
-    const url = `https://wa.me/?text=${encodedText}`;
-    window.open(url, '_blank');
-  };
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappInviteText)}`;
 
   return (
     <div className="bg-white rounded-3xl border border-[#1F2A44]/15 p-6 sm:p-8 lg:p-10">
@@ -162,14 +179,15 @@ export const PasniInvitationGenerator: React.FC = () => {
               <span>{copied ? 'Copied to Clipboard!' : 'Copy WhatsApp Text'}</span>
             </button>
 
-            <button
-              type="button"
-              onClick={handleShareWhatsApp}
-              className="flex-1 py-3 px-4 rounded-full bg-[#5DAA7A] text-white font-bold text-xs hover:bg-[#5DAA7A]/90 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-sm"
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 px-4 rounded-full bg-[#5DAA7A] text-white font-bold text-xs hover:bg-[#5DAA7A]/90 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-sm text-center"
             >
               <MessageSquare className="w-4 h-4" />
               <span>Share on WhatsApp</span>
-            </button>
+            </a>
           </div>
         </div>
 

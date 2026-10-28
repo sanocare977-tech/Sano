@@ -13,7 +13,6 @@ import { VisitorGiftsSection } from './components/VisitorGiftsSection';
 import { PasniCelebrationSection } from './components/PasniCelebrationSection';
 import { HealthAndBlogSection } from './components/HealthAndBlogSection';
 import { RecentOrdersModal } from './components/RecentOrdersModal';
-import { PhysicalStoreSection } from './components/PhysicalStoreSection';
 import { DiaperPage } from './components/DiaperPage';
 import { Footer } from './components/Footer';
 import { OrderTrackingModal } from './components/OrderTrackingModal';
@@ -23,6 +22,10 @@ import { LoyaltyProfile, INITIAL_LOYALTY_PROFILE } from './types/loyalty';
 import { PRODUCTS } from './data/products';
 import { DIAPER_PRODUCTS } from './data/diapers';
 import { AgeStageId, CategoryId, CartItem, Product, SanoOrder } from './types';
+import { SmartSizingEngine, ChildProfile } from './components/SmartSizingEngine';
+import { QuickRestockSection } from './components/QuickRestockSection';
+import { StoreFinderAndTryAtDoorstep } from './components/StoreFinderAndTryAtDoorstep';
+import { CommunityExpertForum } from './components/CommunityExpertForum';
 import { ShoppingBag, ArrowRight, Sparkles, MapPin, Package, CheckCircle2, Truck } from 'lucide-react';
 
 export default function App() {
@@ -50,6 +53,10 @@ export default function App() {
   const [selectedStage, setSelectedStage] = useState<AgeStageId | 'all'>('all');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Smart Sizing Child Profile State
+  const [activeChildProfile, setActiveChildProfile] = useState<ChildProfile | null>(null);
+  const [isChildFilterActive, setIsChildFilterActive] = useState<boolean>(true);
 
   // Cart state
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -82,8 +89,14 @@ export default function App() {
   // Filter products for Home catalog
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
-      // Age stage match
-      if (selectedStage !== 'all' && p.ageStage !== selectedStage) {
+      // Determine effective age stage:
+      // If user manually picked an age stage in filter bar, respect it.
+      // Otherwise, if smart sizing auto-filter is on and child profile exists, filter by child's stage.
+      const effectiveStage = selectedStage !== 'all'
+        ? selectedStage
+        : (isChildFilterActive && activeChildProfile ? activeChildProfile.stageId : 'all');
+
+      if (effectiveStage !== 'all' && p.ageStage !== effectiveStage) {
         return false;
       }
       // Category match
@@ -102,7 +115,7 @@ export default function App() {
       }
       return true;
     });
-  }, [selectedStage, selectedCategory, searchQuery]);
+  }, [selectedStage, selectedCategory, searchQuery, selectedStage, isChildFilterActive, activeChildProfile]);
 
   // Cart actions
   const handleAddToCart = (product: Product, variant: string, quantity: number = 1) => {
@@ -249,6 +262,15 @@ export default function App() {
         onOpenLoyalty={() => setIsLoyaltyOpen(true)}
       />
 
+      {/* 1. SMART SIZING ENGINE & CHILD PROFILE BAR */}
+      <SmartSizingEngine
+        onProfileFilterChange={(profile, isAutoFilter) => {
+          setActiveChildProfile(profile);
+          setIsChildFilterActive(isAutoFilter);
+        }}
+        activeStage={selectedStage}
+      />
+
       <main className="flex-1">
         {currentView === 'diapers' ? (
           /* Dedicated Diapers Page */
@@ -317,7 +339,13 @@ export default function App() {
               </div>
             </section>
 
-            {/* 1. VISITOR GIFTS SECTION (उपहार) - Prompt: what about visitor gift section? */}
+            {/* 2. "QUICK RESTOCK" RECURRING SUBSCRIPTION ENGINE */}
+            <QuickRestockSection
+              onAddToCart={(p, v, q) => handleAddToCart(p, v, q)}
+              onOpenCart={() => setIsCartOpen(true)}
+            />
+
+            {/* 3. VISITOR GIFTS SECTION (उपहार) - Prompt: what about visitor gift section? */}
             <VisitorGiftsSection
               onSelectProduct={(p) => setSelectedProductDetails(p)}
               onAddToCart={(p, v) => handleAddToCart(p, v, 1)}
@@ -356,27 +384,36 @@ export default function App() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-heading text-2xl sm:text-3xl font-bold text-[#1F2A44]">
-                      {selectedStage === 'all'
-                        ? 'All Products (Pregnancy to 14 Years)'
-                        : `Products for ${selectedStage.toUpperCase().replace('_', ' ')}`}
+                      {selectedStage !== 'all'
+                        ? `Products for ${selectedStage.toUpperCase().replace('_', ' ')}`
+                        : isChildFilterActive && activeChildProfile
+                        ? `Filtered for ${activeChildProfile.name} (${activeChildProfile.heightCm} cm · ${activeChildProfile.heightLabel})`
+                        : 'All Products (Pregnancy to 14 Years)'}
                     </span>
                     <span className="w-2.5 h-2.5 rounded-full bg-[#F5B301]" />
                   </div>
                   <p className="text-xs sm:text-sm text-[#1F2A44]/70 mt-1">
-                    Showing {filteredProducts.length} verified item{filteredProducts.length === 1 ? '' : 's'} with height-indexed sizing
+                    {isChildFilterActive && activeChildProfile && selectedStage === 'all' ? (
+                      <span className="text-[#5DAA7A] font-bold">
+                        Smart Sizing active: Showing clothes &amp; essentials precisely fitted for {activeChildProfile.heightCm} cm.
+                      </span>
+                    ) : (
+                      `Showing ${filteredProducts.length} verified item${filteredProducts.length === 1 ? '' : 's'} with height-indexed sizing`
+                    )}
                   </p>
                 </div>
 
-                {(selectedStage !== 'all' || selectedCategory !== 'all' || searchQuery) && (
+                {(selectedStage !== 'all' || selectedCategory !== 'all' || searchQuery || (isChildFilterActive && activeChildProfile)) && (
                   <button
                     onClick={() => {
                       setSelectedStage('all');
                       setSelectedCategory('all');
                       setSearchQuery('');
+                      setIsChildFilterActive(false);
                     }}
                     className="text-xs font-bold text-[#1F2A44] hover:text-[#E8604F] underline cursor-pointer self-start sm:self-auto"
                   >
-                    Reset All Filters
+                    Reset All Filters / Show All Ages
                   </button>
                 )}
               </div>
@@ -479,8 +516,11 @@ export default function App() {
               onNavigateToSection={scrollToSection}
             />
 
-            {/* Brand Story & Physical Store Roadmap */}
-            <PhysicalStoreSection />
+            {/* 5. VERIFIED PEDIATRICIAN Q&A & COMMUNITY CARE FORUM */}
+            <CommunityExpertForum />
+
+            {/* 6. OMNICHANNEL "TRY AT DOORSTEP" & KATHMANDU STORES */}
+            <StoreFinderAndTryAtDoorstep />
           </>
         )}
       </main>
