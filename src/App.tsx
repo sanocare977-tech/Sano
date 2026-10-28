@@ -8,6 +8,10 @@ import { CartDrawer } from './components/CartDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { OrderConfirmationModal } from './components/OrderConfirmationModal';
 import { HospitalBagModal } from './components/HospitalBagModal';
+import { HospitalBagSection } from './components/HospitalBagSection';
+import { VisitorGiftsSection } from './components/VisitorGiftsSection';
+import { PasniCelebrationSection } from './components/PasniCelebrationSection';
+import { HealthAndBlogSection } from './components/HealthAndBlogSection';
 import { RecentOrdersModal } from './components/RecentOrdersModal';
 import { PhysicalStoreSection } from './components/PhysicalStoreSection';
 import { DiaperPage } from './components/DiaperPage';
@@ -313,6 +317,24 @@ export default function App() {
               </div>
             </section>
 
+            {/* 1. VISITOR GIFTS SECTION (उपहार) - Prompt: what about visitor gift section? */}
+            <VisitorGiftsSection
+              onSelectProduct={(p) => setSelectedProductDetails(p)}
+              onAddToCart={(p, v) => handleAddToCart(p, v, 1)}
+            />
+
+            {/* 2. HOSPITAL BAG 3-PHASE ESSENTIALS (Before Delivery, For Mother, For Newborn) */}
+            <HospitalBagSection
+              onAddToCart={(p, v) => handleAddToCart(p, v, 1)}
+              onSelectProduct={(p) => setSelectedProductDetails(p)}
+            />
+
+            {/* 3. PASNI (RICE FEEDING) CEREMONY & WEANING HUB */}
+            <PasniCelebrationSection
+              onAddToCart={(p, v, q) => handleAddToCart(p, v, q)}
+              onOpenCart={() => setIsCartOpen(true)}
+            />
+
             {/* Primary Filter Bar: Age & Height First, Category Second */}
             <section id="age-stages">
               <AgeFilterBar
@@ -447,6 +469,15 @@ export default function App() {
               </div>
 
             </section>
+
+            {/* 4. HEALTH & BLOG HUB: "Nurturing Healthy Moms & Smart Kids" */}
+            <HealthAndBlogSection
+              onSelectCategory={(cat) => {
+                setSelectedCategory(cat);
+                scrollToSection('age-stages');
+              }}
+              onNavigateToSection={scrollToSection}
+            />
 
             {/* Brand Story & Physical Store Roadmap */}
             <PhysicalStoreSection />

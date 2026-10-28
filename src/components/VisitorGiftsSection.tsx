@@ -30,7 +30,7 @@ export const VisitorGiftsSection: React.FC<VisitorGiftsSectionProps> = ({
   });
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#1F2A44]/10 bg-gradient-to-b from-transparent to-[#FFF6E9]">
+    <section id="visitor-gifts" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#1F2A44]/10 bg-gradient-to-b from-transparent to-[#FFF6E9]">
       {/* Title & Introduction */}
       <div className="text-center max-w-3xl mx-auto mb-10">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8604F]/10 text-[#1F2A44] text-xs font-bold mb-3">

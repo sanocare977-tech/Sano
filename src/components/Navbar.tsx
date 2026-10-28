@@ -83,8 +83,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#F5B301] ml-0.5 group-hover:scale-110 transition-transform"></span>
           </button>
 
-          {/* Zone 2: 4-5 Concise Single-Line Text Links */}
-          <nav className="hidden md:flex items-center gap-6 text-[15px] font-semibold text-[#1F2A44]/80">
+          {/* Zone 2: Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-5 text-[14px] font-semibold text-[#1F2A44]/80">
             <button
               onClick={() => {
                 onNavigateToHome();
@@ -94,10 +94,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 currentView === 'home' ? 'text-[#1F2A44]' : ''
               }`}
             >
-              Shop by Age & Height
+              Shop by Age
             </button>
 
-            {/* NEW: Dedicated Diaper Station Link */}
+            {/* Dedicated Diaper Station Link */}
             <button
               onClick={onNavigateToDiapers}
               className={`hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1.5 ${
@@ -110,22 +110,53 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Diaper Station</span>
             </button>
 
+            {/* Visitor Gifts */}
             <button
               onClick={() => {
                 onNavigateToHome();
-                setTimeout(() => onNavigateToSection('products-catalog'), 50);
+                setTimeout(() => onNavigateToSection('visitor-gifts'), 50);
+              }}
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1"
+            >
+              <span className="text-[#E8604F]">🎁</span>
+              <span>Visitor Gifts (उपहार)</span>
+            </button>
+
+            {/* Hospital Bag 3-Stages */}
+            <button
+              onClick={() => {
+                onNavigateToHome();
+                setTimeout(() => onNavigateToSection('hospital-bag'), 50);
+              }}
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#F5B301]" />
+              <span>Hospital Bag (3 Stages)</span>
+            </button>
+
+            {/* Pasni & Weaning */}
+            <button
+              onClick={() => {
+                onNavigateToHome();
+                setTimeout(() => onNavigateToSection('pasni-celebrations'), 50);
               }}
               className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1"
             >
-              All Essentials
+              Pasni &amp; Weaning
             </button>
+
+            {/* Mom & Child Health Blog */}
             <button
-              onClick={onOpenChecklist}
-              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1.5 text-[#1F2A44]"
+              onClick={() => {
+                onNavigateToHome();
+                setTimeout(() => onNavigateToSection('health-blog'), 50);
+              }}
+              className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1 flex items-center gap-1 text-[#1F2A44]"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F5B301]" />
-              Hospital Bag
+              <span className="text-[#5DAA7A]">🩵</span>
+              <span>Mom &amp; Kid Health</span>
             </button>
+
             <button
               onClick={() => {
                 onNavigateToHome();
@@ -133,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
               className="hover:text-[#1F2A44] transition-colors whitespace-nowrap cursor-pointer py-1"
             >
-              Kathmandu Store
+              Store
             </button>
           </nav>
 
@@ -172,6 +203,76 @@ export const Navbar: React.FC<NavbarProps> = ({
               </span>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Secondary Quick Jump Strip (Visible on mobile & desktop) */}
+      <div className="border-t border-[#1F2A44]/5 bg-white/60 overflow-x-auto no-scrollbar py-2 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3 text-xs font-bold whitespace-nowrap">
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('age-stages'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer"
+          >
+            👶 Shop by Age &amp; Height
+          </button>
+          <button
+            onClick={onNavigateToDiapers}
+            className={`px-3 py-1 rounded-full transition-colors cursor-pointer flex items-center gap-1 ${
+              currentView === 'diapers'
+                ? 'bg-[#F5B301] text-[#1F2A44]'
+                : 'bg-[#F5B301]/20 hover:bg-[#F5B301]/30 text-[#1F2A44]'
+            }`}
+          >
+            📦 Diaper Station
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('visitor-gifts'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#E8604F]/15 hover:bg-[#E8604F]/25 text-[#1F2A44] transition-colors cursor-pointer flex items-center gap-1"
+          >
+            🎁 Visitor Gifts (उपहार)
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('hospital-bag'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer flex items-center gap-1"
+          >
+            🏥 Hospital Bag (3 Stages)
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('pasni-celebrations'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer"
+          >
+            🍚 Pasni &amp; Weaning
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('health-blog'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#5DAA7A]/15 hover:bg-[#5DAA7A]/25 text-[#1F2A44] transition-colors cursor-pointer flex items-center gap-1"
+          >
+            🩵 Mom &amp; Kid Health Hub
+          </button>
+          <button
+            onClick={() => {
+              onNavigateToHome();
+              setTimeout(() => onNavigateToSection('why-sano'), 50);
+            }}
+            className="px-3 py-1 rounded-full bg-[#1F2A44]/5 hover:bg-[#1F2A44]/10 text-[#1F2A44] transition-colors cursor-pointer"
+          >
+            🏬 Kathmandu Store
+          </button>
         </div>
       </div>
     </header>

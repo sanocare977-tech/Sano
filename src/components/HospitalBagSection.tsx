@@ -267,7 +267,7 @@ export const HospitalBagSection: React.FC<HospitalBagSectionProps> = ({
   };
 
   return (
-    <section id="hospital-bag-section" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#1F2A44]/10">
+    <section id="hospital-bag" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#1F2A44]/10">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
