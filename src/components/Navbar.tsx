@@ -64,17 +64,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-[#FFF6E9]/95 backdrop-blur-md border-b border-[#1F2A44]/10 transition-colors">
-      {/* Top micro announcement bar with touch-friendly buttons */}
-      <div className="bg-[#1F2A44] text-[#FFF6E9] px-3 sm:px-4 py-1 text-xs font-medium">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1 md:gap-4 text-[11px] sm:text-[13px]">
-          <span className="truncate max-w-full text-white/90 py-1 text-center md:text-left">
-            Kathmandu Valley delivery (24–48h) · Free Valley delivery over Rs. 2,500.
+      {/* Top micro announcement bar with touch-friendly layout */}
+      <div className="bg-[#1F2A44] text-[#FFF6E9] px-3 sm:px-4 py-1.5 text-xs font-medium">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 text-[11px] sm:text-[13px]">
+          <span className="truncate max-w-full text-white/90 text-center sm:text-left flex-1 sm:flex-initial">
+            Kathmandu Valley delivery (24–48h) · Free over Rs. 2,500
           </span>
-          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar max-w-full justify-center">
+          <div className="hidden sm:flex items-center gap-1 sm:gap-2 shrink-0">
             <button
               type="button"
               onClick={onNavigateToDiapers}
-              className="text-[#F5B301] hover:underline whitespace-nowrap text-xs shrink-0 cursor-pointer font-bold min-h-[48px] min-w-[48px] px-3 inline-flex items-center justify-center active:scale-95 transition-transform"
+              className="text-[#F5B301] hover:underline whitespace-nowrap text-xs cursor-pointer font-bold px-2 py-1 inline-flex items-center active:scale-95 transition-transform"
             >
               Diaper Station
             </button>
@@ -82,19 +82,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={onOpenLoyalty}
-              className="text-[#F5B301] hover:underline whitespace-nowrap text-xs shrink-0 cursor-pointer inline-flex items-center justify-center gap-1 font-bold min-h-[48px] min-w-[48px] px-3 active:scale-95 transition-transform"
+              className="text-[#F5B301] hover:underline whitespace-nowrap text-xs cursor-pointer inline-flex items-center gap-1 font-bold px-2 py-1 active:scale-95 transition-transform"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#F5B301]" />
-              <span>{loyaltyPoints} Sano Pts</span>
+              <span>{loyaltyPoints} Pts</span>
             </button>
             <span className="text-white/40" aria-hidden="true">·</span>
             <button
               type="button"
               onClick={() => onOpenOrderTracking()}
-              className="text-[#FFF6E9] hover:text-[#F5B301] hover:underline whitespace-nowrap text-xs shrink-0 cursor-pointer font-bold inline-flex items-center justify-center gap-1 min-h-[48px] min-w-[48px] px-3 active:scale-95 transition-transform"
+              className="text-[#FFF6E9] hover:text-[#F5B301] hover:underline whitespace-nowrap text-xs cursor-pointer font-bold inline-flex items-center gap-1 px-2 py-1 active:scale-95 transition-transform"
             >
               <MapPin className="w-3.5 h-3.5 text-[#F5B301]" />
-              <span>Track Order</span>
+              <span>Track</span>
             </button>
           </div>
         </div>

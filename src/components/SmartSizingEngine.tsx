@@ -549,52 +549,56 @@ export const SmartSizingEngine: React.FC<SmartSizingEngineProps> = ({
   const previewBracket = calculateSanoBracket(formHeightCm);
 
   return (
-    <div className="w-full bg-[#1F2A44] text-[#FFF6E9] py-2.5 px-4 sm:px-6 lg:px-8 border-b-2 border-[#F5B301] shadow-inner select-none">
-      <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+    <div className="w-full bg-[#1F2A44] text-[#FFF6E9] py-2 px-3 sm:px-6 lg:px-8 border-b-2 border-[#F5B301] shadow-inner select-none">
+      <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4 text-xs">
         
-        {/* Left Indicator & Smart Sizing Explanation */}
-        <div className="flex items-center gap-2.5 flex-wrap justify-center sm:justify-start">
+        {/* Left Indicator & Smart Sizing Explanation (Hidden on mobile to save vertical space) */}
+        <div className="hidden sm:flex items-center gap-2.5 flex-wrap">
           <span className="flex h-2.5 w-2.5 rounded-full bg-[#5DAA7A] animate-pulse" />
           <span className="font-bold text-[#F5B301] uppercase tracking-wider text-[11px] flex items-center gap-1.5">
             <Ruler className="w-3.5 h-3.5 text-[#F5B301]" />
             <span>Smart Sizing &amp; Growth Engine</span>
           </span>
-          <span className="hidden md:inline text-white/50">•</span>
-          <span className="text-[#FFF6E9]/80 hidden md:inline text-xs">
+          <span className="text-white/50">•</span>
+          <span className="text-[#FFF6E9]/80 text-xs">
             Personalized sizing + WHO pediatric height tracker for Kathmandu parents.
           </span>
         </div>
 
         {/* Center/Right Profile Selector & Growth Quick Actions */}
         {activeProfile ? (
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+          <div className="w-full md:w-auto flex items-center justify-between md:justify-end gap-1.5 sm:gap-2.5">
             
             {/* Active Child Dropdown Switcher */}
-            <div className="relative">
+            <div className="relative flex-1 md:flex-initial min-w-0">
               <button
                 type="button"
                 onClick={() => setIsSwitcherOpen(!isSwitcherOpen)}
-                className="flex items-center justify-center gap-2 rounded-full bg-white/10 px-4 py-2.5 border border-white/20 hover:bg-white/15 transition-colors cursor-pointer text-left min-h-[48px] min-w-[48px] active:scale-95"
+                className="w-full md:w-auto flex items-center justify-between md:justify-center gap-1.5 sm:gap-2 rounded-full bg-white/10 px-3 sm:px-4 py-2 border border-white/20 hover:bg-white/15 transition-colors cursor-pointer text-left min-h-[48px] active:scale-95"
                 title="Click to switch child or view sizing"
               >
-                <Baby className="w-4 h-4 text-[#F5B301]" />
-                <span className="font-bold text-[#FFF6E9]">{activeProfile.name}</span>
-                <span className="text-white/60 text-[11px]">
-                  ({activeProfile.gender === 'boy' ? 'Boy 👦' : 'Girl 👧'})
-                </span>
-                <span className="text-[#F5B301] font-bold">•</span>
-                <span className="font-bold text-[#8FD0EA] flex items-center gap-1">
-                  {activeProfile.heightCm} cm
-                </span>
-                <span className="rounded-full bg-[#F5B301] px-2 py-0.5 text-[10px] font-bold text-[#1F2A44] ml-0.5">
-                  {activeProfile.bracketId}
-                </span>
-                <ChevronDown className="w-3.5 h-3.5 text-white/60 ml-0.5" />
+                <div className="flex items-center gap-1.5 min-w-0 truncate">
+                  <Baby className="w-4 h-4 text-[#F5B301] shrink-0" />
+                  <span className="font-bold text-[#FFF6E9] truncate">{activeProfile.name}</span>
+                  <span className="text-white/60 text-[11px] hidden xs:inline">
+                    ({activeProfile.gender === 'boy' ? '👦' : '👧'})
+                  </span>
+                  <span className="text-[#F5B301] font-bold">•</span>
+                  <span className="font-bold text-[#8FD0EA] whitespace-nowrap">
+                    {activeProfile.heightCm}cm
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 shrink-0 ml-1">
+                  <span className="rounded-full bg-[#F5B301] px-1.5 py-0.5 text-[10px] font-bold text-[#1F2A44]">
+                    {activeProfile.bracketId}
+                  </span>
+                  <ChevronDown className="w-3.5 h-3.5 text-white/60" />
+                </div>
               </button>
 
               {/* Multi-child dropdown switcher */}
               {isSwitcherOpen && (
-                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-[#FFF6E9] p-3 text-[#1F2A44] border-2 border-[#1F2A44] shadow-2xl z-50 space-y-2">
+                <div className="absolute left-0 md:left-auto md:right-0 mt-2 w-72 rounded-2xl bg-[#FFF6E9] p-3 text-[#1F2A44] border-2 border-[#1F2A44] shadow-2xl z-50 space-y-2">
                   <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#1F2A44]/70 px-1 border-b border-[#1F2A44]/10 pb-1.5">
                     <span>Your Child Profiles</span>
                     <span className="text-[#E8604F] text-[10px]">{profiles.length} registered</span>
@@ -652,52 +656,59 @@ export const SmartSizingEngine: React.FC<SmartSizingEngineProps> = ({
               )}
             </div>
 
-            {/* Growth Trend Quick Button */}
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab('growth_trend');
-                setIsModalOpen(true);
-              }}
-              className="flex items-center justify-center gap-1.5 rounded-full bg-[#E8604F] px-4 py-2.5 font-bold text-white hover:bg-[#E8604F]/90 transition-all text-xs cursor-pointer shadow-sm min-h-[48px] min-w-[48px] active:scale-95"
-              title="View child height growth chart vs WHO curve"
-            >
-              <TrendingUp className="w-4 h-4 text-[#F5B301]" />
-              <span>Growth Trend</span>
-              <span className="hidden sm:inline bg-black/20 px-2 py-0.5 rounded-full text-[10px] text-white/90">
-                +{stats.totalGain} cm
-              </span>
-            </button>
+            {/* Quick Action Buttons Group */}
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+              {/* Auto-Filter Toggle */}
+              <button
+                type="button"
+                onClick={() => setIsAutoFilterActive(!isAutoFilterActive)}
+                className={`flex items-center justify-center gap-1 rounded-full px-2.5 sm:px-3.5 py-2 font-bold transition-all text-xs cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 ${
+                  isAutoFilterActive
+                    ? 'bg-[#5DAA7A] text-white shadow-xs'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20'
+                }`}
+                title="Toggle automatic catalog filtering based on child height"
+                aria-label={isAutoFilterActive ? 'Sizing filter is on' : 'Sizing filter is off'}
+              >
+                <Check className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">
+                  {isAutoFilterActive ? 'Filter: ON' : 'Filter: OFF'}
+                </span>
+                <span className="sm:hidden font-bold">
+                  {isAutoFilterActive ? 'Fit' : 'All'}
+                </span>
+              </button>
 
-            {/* Auto-Filter Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsAutoFilterActive(!isAutoFilterActive)}
-              className={`flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 font-bold transition-all text-xs cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 ${
-                isAutoFilterActive
-                  ? 'bg-[#5DAA7A] text-white shadow-xs'
-                  : 'bg-white/10 text-white/70 hover:bg-white/20'
-              }`}
-              title="Toggle automatic catalog filtering based on child height"
-            >
-              <Check className="w-3.5 h-3.5" />
-              <span>
-                {isAutoFilterActive ? 'Filter Catalog: ON' : 'Filter Catalog: OFF'}
-              </span>
-            </button>
+              {/* Growth Trend Quick Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('growth_trend');
+                  setIsModalOpen(true);
+                }}
+                className="flex items-center justify-center gap-1 rounded-full bg-[#E8604F] px-2.5 sm:px-3.5 py-2 font-bold text-white hover:bg-[#E8604F]/90 transition-all text-xs cursor-pointer shadow-sm min-h-[48px] min-w-[48px] active:scale-95"
+                title="View child height growth chart vs WHO curve"
+                aria-label="View child growth trend chart"
+              >
+                <TrendingUp className="w-4 h-4 text-[#F5B301]" />
+                <span className="hidden md:inline">Growth</span>
+              </button>
 
-            {/* Edit Profile / Calculator Button */}
-            <button
-              type="button"
-              onClick={() => {
-                setActiveTab('calculator');
-                setIsModalOpen(true);
-              }}
-              className="flex items-center justify-center gap-1.5 rounded-full bg-[#F5B301] px-4 py-2.5 font-bold text-[#1F2A44] hover:bg-[#F5B301]/90 transition-all text-xs cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 shadow-xs"
-            >
-              <Ruler className="w-4 h-4" />
-              <span>Sizing Calc</span>
-            </button>
+              {/* Edit Profile / Calculator Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('calculator');
+                  setIsModalOpen(true);
+                }}
+                className="flex items-center justify-center gap-1 rounded-full bg-[#F5B301] px-2.5 sm:px-3.5 py-2 font-bold text-[#1F2A44] hover:bg-[#F5B301]/90 transition-all text-xs cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 shadow-xs"
+                title="Open DOB & Height Sizing Calculator"
+                aria-label="Open sizing calculator"
+              >
+                <Ruler className="w-4 h-4" />
+                <span className="hidden md:inline">Calc</span>
+              </button>
+            </div>
           </div>
         ) : (
           <button
@@ -706,7 +717,7 @@ export const SmartSizingEngine: React.FC<SmartSizingEngineProps> = ({
               setActiveTab('calculator');
               setIsModalOpen(true);
             }}
-            className="flex items-center justify-center gap-2 rounded-full bg-[#F5B301] px-5 py-2.5 font-bold text-[#1F2A44] hover:bg-[#F5B301]/90 transition-all text-xs sm:text-sm cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 shadow-xs"
+            className="w-full md:w-auto flex items-center justify-center gap-2 rounded-full bg-[#F5B301] px-5 py-2.5 font-bold text-[#1F2A44] hover:bg-[#F5B301]/90 transition-all text-xs sm:text-sm cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 shadow-xs"
           >
             <Plus className="w-4 h-4" />
             <span>Set Child DOB &amp; Height</span>
