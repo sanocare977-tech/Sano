@@ -361,11 +361,15 @@ export const DiaperPage: React.FC<DiaperPageProps> = ({
                   onClick={() => onViewProductDetails(product)}
                   className="group relative flex flex-col bg-white rounded-2xl border border-[#1F2A44]/12 overflow-hidden transition-all hover:border-[#1F2A44]/35 cursor-pointer text-[#1F2A44]"
                 >
-                  {/* Image */}
-                  <div className="relative aspect-square w-full bg-[#FFF6E9] overflow-hidden">
+                  {/* Image with Aspect Ratio & Minimum Height */}
+                  <div className="relative aspect-square w-full min-h-[160px] sm:min-h-[220px] bg-[#FFF6E9] overflow-hidden shrink-0">
                     <img
                       src={product.image}
                       alt={product.name}
+                      loading="lazy"
+                      decoding="async"
+                      width={400}
+                      height={400}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
                     />

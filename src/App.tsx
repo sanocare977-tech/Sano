@@ -26,7 +26,6 @@ import { SmartSizingEngine, ChildProfile } from './components/SmartSizingEngine'
 import { QuickRestockSection } from './components/QuickRestockSection';
 import { StoreFinderAndTryAtDoorstep } from './components/StoreFinderAndTryAtDoorstep';
 import { CommunityExpertForum } from './components/CommunityExpertForum';
-import BabyMascotWithAudio from './components/BabyMascotWithAudio';
 import { ShoppingBag, ArrowRight, Sparkles, MapPin, Package, CheckCircle2, Truck } from 'lucide-react';
 
 export default function App() {
@@ -378,7 +377,7 @@ export default function App() {
             </section>
 
             {/* Product Catalog Grid */}
-            <section id="products-catalog" className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section id="products-catalog" className="py-8 sm:py-14 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
               
               {/* Active Filter Headline */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -445,7 +444,7 @@ export default function App() {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
                   {filteredProducts.map((product) => (
                     <ProductCard
                       key={product.id}
@@ -569,6 +568,7 @@ export default function App() {
         onOpenRecentOrders={() => setIsRecentOrdersOpen(true)}
         onNavigateToDiapers={navigateToDiapers}
         onOpenOrderTracking={handleOpenTracking}
+        onNavigateToSection={scrollToSection}
       />
 
       {/* Modals */}
@@ -644,16 +644,6 @@ export default function App() {
         onClose={() => setIsTrackingOpen(false)}
         initialOrderId={trackingOrderId}
       />
-
-      {/* 3D Interactive Baby Mascot (Bottom-Right Floating Portal) */}
-      <BabyMascotWithAudio
-        onApplyCoupon={(discountPercent) => {
-          const discount = Math.round(((subtotalNPR > 0 ? subtotalNPR : 1500) * discountPercent) / 100);
-          setAppliedDiscountNPR(discount);
-          setIsCartOpen(true);
-        }}
-      />
-
     </div>
   );
 }

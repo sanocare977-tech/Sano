@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
 @import "leaflet/dist/leaflet.css";
 
 @theme {
@@ -11,6 +12,20 @@
   --color-coral: #E8604F;
   --color-sky: #8FD0EA;
   --color-leaf: #5DAA7A;
+
+  /* Responsive text scaling: Minimum 14px (0.875rem) base size on small screens */
+  --text-xs: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
+  --text-sm: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.75vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.35rem + 1vw, 1.875rem);
+
+  /* Dedicated product card tokens for mobile readability */
+  --text-product-title: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
+  --text-product-price: clamp(1.125rem, 1.05rem + 0.6vw, 1.45rem);
+  --text-product-meta: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
+  --text-product-desc: clamp(0.875rem, 0.85rem + 0.2vw, 0.9375rem);
 }
 
 :root {

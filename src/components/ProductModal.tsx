@@ -101,7 +101,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                         key={v.size}
                         type="button"
                         onClick={() => setSelectedVariant(v.size)}
-                        className={`px-3.5 py-2 text-xs sm:text-sm font-bold rounded-full transition-all cursor-pointer min-h-[44px] ${
+                        className={`px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer min-h-[48px] min-w-[48px] ${
                           isSelected
                             ? 'bg-[#1F2A44] text-[#FFF6E9]'
                             : 'bg-[#FFF6E9] text-[#1F2A44] border border-[#1F2A44]/15 hover:border-[#1F2A44]/35'
