@@ -26,6 +26,7 @@ import { SmartSizingEngine, ChildProfile } from './components/SmartSizingEngine'
 import { QuickRestockSection } from './components/QuickRestockSection';
 import { StoreFinderAndTryAtDoorstep } from './components/StoreFinderAndTryAtDoorstep';
 import { CommunityExpertForum } from './components/CommunityExpertForum';
+import BabyMascotWithAudio from './components/BabyMascotWithAudio';
 import { ShoppingBag, ArrowRight, Sparkles, MapPin, Package, CheckCircle2, Truck } from 'lucide-react';
 
 export default function App() {
@@ -158,7 +159,7 @@ export default function App() {
   );
   // Free Kathmandu Valley delivery over Rs. 2,500
   const deliveryFeeNPR = subtotalNPR >= 2500 || subtotalNPR === 0 ? 0 : 100;
-  const totalNPR = subtotalNPR + deliveryFeeNPR;
+  const totalNPR = Math.max(0, subtotalNPR + deliveryFeeNPR - appliedDiscountNPR);
   const totalCartCount = cartItems.reduce((acc, i) => acc + i.quantity, 0);
 
   const handleOrderSuccess = (order: SanoOrder, pointsEarned: number) => {
@@ -642,6 +643,15 @@ export default function App() {
         isOpen={isTrackingOpen}
         onClose={() => setIsTrackingOpen(false)}
         initialOrderId={trackingOrderId}
+      />
+
+      {/* 3D Interactive Baby Mascot (Bottom-Right Floating Portal) */}
+      <BabyMascotWithAudio
+        onApplyCoupon={(discountPercent) => {
+          const discount = Math.round(((subtotalNPR > 0 ? subtotalNPR : 1500) * discountPercent) / 100);
+          setAppliedDiscountNPR(discount);
+          setIsCartOpen(true);
+        }}
       />
 
     </div>

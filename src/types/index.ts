@@ -67,11 +67,25 @@ export interface Product {
   giftRecipient?: 'grandparents' | 'relatives' | 'friends_colleagues' | 'baby_shower';
 }
 
+export interface GrowthEntry {
+  id: string;
+  date: string; // YYYY-MM-DD
+  heightCm: number;
+  ageMonths?: number;
+  note?: string;
+}
+
 export interface ChildProfile {
+  id?: string;
   name?: string;
   birthDate?: string;
-  heightCm?: number;
+  dob?: string;
   gender?: 'all' | 'boy' | 'girl';
+  heightCm?: number;
+  bracketId?: string;
+  heightLabel?: string;
+  stageId?: AgeStageId;
+  growthHistory?: GrowthEntry[];
 }
 
 export interface CartItem {

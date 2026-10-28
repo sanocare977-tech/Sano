@@ -43,12 +43,12 @@ export const AgeFilterBar: React.FC<AgeFilterBarProps> = ({
           </div>
 
           {/* Age Pills row (Horizontal scroll on mobile) */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
             <button
               onClick={() => onSelectStage('all')}
-              className={`shrink-0 px-4 py-2 text-sm font-bold rounded-full transition-all cursor-pointer min-h-[44px] flex items-center gap-2 ${
+              className={`shrink-0 px-4 py-2 text-sm font-bold rounded-full transition-all cursor-pointer min-h-[48px] min-w-[48px] flex items-center justify-center gap-2 active:scale-95 ${
                 selectedStage === 'all'
-                  ? 'bg-[#1F2A44] text-[#FFF6E9]'
+                  ? 'bg-[#1F2A44] text-[#FFF6E9] shadow-xs'
                   : 'bg-white text-[#1F2A44] border border-[#1F2A44]/15 hover:border-[#1F2A44]/30'
               }`}
             >
@@ -62,9 +62,9 @@ export const AgeFilterBar: React.FC<AgeFilterBarProps> = ({
                 <button
                   key={stage.id}
                   onClick={() => onSelectStage(stage.id)}
-                  className={`shrink-0 px-4 py-2 rounded-full transition-all cursor-pointer min-h-[44px] flex flex-col justify-center text-left ${
+                  className={`shrink-0 px-4 py-2 rounded-full transition-all cursor-pointer min-h-[48px] min-w-[48px] flex flex-col justify-center text-left active:scale-95 ${
                     isSelected
-                      ? 'bg-[#1F2A44] text-[#FFF6E9]'
+                      ? 'bg-[#1F2A44] text-[#FFF6E9] shadow-xs'
                       : 'bg-white text-[#1F2A44] border border-[#1F2A44]/15 hover:border-[#1F2A44]/30'
                   }`}
                 >
@@ -100,10 +100,10 @@ export const AgeFilterBar: React.FC<AgeFilterBarProps> = ({
                 placeholder="Search products, materials..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full bg-white text-[#1F2A44] text-xs sm:text-sm px-4 py-2 pl-9 rounded-full border border-[#1F2A44]/15 focus:border-[#F5B301] focus:ring-1 focus:ring-[#F5B301] outline-none transition-colors"
+                className="w-full bg-white text-[#1F2A44] text-xs sm:text-sm px-4 py-2.5 pl-9 pr-10 rounded-full border border-[#1F2A44]/15 focus:border-[#F5B301] focus:ring-1 focus:ring-[#F5B301] outline-none transition-colors min-h-[48px]"
               />
               <svg
-                className="w-4 h-4 absolute left-3 top-2.5 text-[#1F2A44]/50"
+                className="w-4 h-4 absolute left-3 top-3.5 text-[#1F2A44]/50"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -112,8 +112,10 @@ export const AgeFilterBar: React.FC<AgeFilterBarProps> = ({
               </svg>
               {searchQuery && (
                 <button
+                  type="button"
                   onClick={() => onSearchChange('')}
-                  className="absolute right-3 top-2 text-xs text-[#1F2A44]/50 hover:text-[#1F2A44] cursor-pointer"
+                  className="absolute right-1 top-0 w-12 h-12 min-w-[48px] min-h-[48px] flex items-center justify-center text-sm text-[#1F2A44]/50 hover:text-[#1F2A44] active:scale-90 transition-transform cursor-pointer"
+                  aria-label="Clear search"
                 >
                   ✕
                 </button>
@@ -122,17 +124,17 @@ export const AgeFilterBar: React.FC<AgeFilterBarProps> = ({
           </div>
 
           {/* Category Chips */}
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
             {CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => onSelectCategory(cat.id)}
-                  className={`shrink-0 px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer min-h-[38px] ${
+                  className={`shrink-0 px-4 py-2.5 text-xs sm:text-sm font-semibold rounded-full transition-all cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 ${
                     isSelected
-                      ? 'bg-[#F5B301] text-[#1F2A44]'
-                      : 'bg-[#FFF6E9] text-[#1F2A44]/80 hover:bg-white hover:text-[#1F2A44]'
+                      ? 'bg-[#F5B301] text-[#1F2A44] shadow-xs'
+                      : 'bg-[#FFF6E9] text-[#1F2A44]/80 border border-[#1F2A44]/10 hover:bg-white hover:text-[#1F2A44]'
                   }`}
                 >
                   {cat.name}

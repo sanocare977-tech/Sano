@@ -329,8 +329,9 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[#1F2A44]/60 hover:text-[#1F2A44] hover:bg-[#1F2A44]/10 cursor-pointer shrink-0 ml-2 transition-colors"
+            className="w-12 h-12 min-w-[48px] min-h-[48px] rounded-full flex items-center justify-center text-[#1F2A44]/60 hover:text-[#1F2A44] hover:bg-[#1F2A44]/10 active:scale-95 cursor-pointer shrink-0 ml-2 transition-all"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -345,8 +346,9 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
             return (
               <button
                 key={cat.id}
+                type="button"
                 onClick={() => setActiveCategory(cat.id as any)}
-                className={`px-4 py-2 text-xs font-bold rounded-full transition-all cursor-pointer flex items-center gap-2 shrink-0 ${
+                className={`px-4 py-2.5 text-xs font-bold rounded-full transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0 min-h-[48px] min-w-[48px] active:scale-95 ${
                   isActive
                     ? 'bg-[#1F2A44] text-[#FFF6E9] shadow-sm'
                     : 'bg-white border border-[#1F2A44]/15 text-[#1F2A44] hover:bg-white/80'
@@ -480,14 +482,16 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <button
+              type="button"
               onClick={onClose}
-              className="px-5 py-2.5 text-xs font-bold text-[#1F2A44] border border-[#1F2A44]/20 rounded-full hover:bg-[#1F2A44]/5 cursor-pointer"
+              className="px-5 py-2.5 text-xs font-bold text-[#1F2A44] border border-[#1F2A44]/20 rounded-full hover:bg-[#1F2A44]/5 active:scale-95 transition-all cursor-pointer min-h-[48px] min-w-[48px]"
             >
               Close
             </button>
             <button
+              type="button"
               onClick={handleAddAllInView}
-              className="flex-1 sm:flex-initial px-6 py-2.5 text-xs sm:text-sm font-bold bg-[#1F2A44] text-[#FFF6E9] rounded-full hover:bg-[#1F2A44]/90 flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-95 transition-transform"
+              className="flex-1 sm:flex-initial px-6 py-3 text-xs sm:text-sm font-bold bg-[#1F2A44] text-[#FFF6E9] rounded-full hover:bg-[#1F2A44]/90 flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-95 transition-transform min-h-[48px] min-w-[48px]"
             >
               <ShoppingBag className="w-4 h-4 text-[#F5B301]" />
               <span>
@@ -507,7 +511,7 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
     return (
       <div
         key={item.id}
-        className="p-4 rounded-2xl border border-[#1F2A44]/12 bg-[#FFF6E9]/40 hover:border-[#F5B301] transition-all flex flex-col justify-between"
+        className="clickable-card min-h-[48px] min-w-[48px] p-4 rounded-2xl border border-[#1F2A44]/12 bg-[#FFF6E9]/40 hover:border-[#F5B301] transition-all flex flex-col justify-between"
       >
         <div>
           {/* Top image & pricing row */}
@@ -577,21 +581,22 @@ export const HospitalBagModal: React.FC<HospitalBagModalProps> = ({
           </span>
 
           <button
+            type="button"
             onClick={() => handleAddItem(item)}
-            className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all flex items-center gap-1.5 cursor-pointer ${
+            className={`px-5 py-2.5 text-xs font-bold rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[48px] min-w-[48px] active:scale-95 ${
               isAdded
                 ? 'bg-[#5DAA7A] text-white'
-                : 'bg-[#1F2A44] text-[#FFF6E9] hover:bg-[#1F2A44]/85 active:scale-95'
+                : 'bg-[#1F2A44] text-[#FFF6E9] hover:bg-[#1F2A44]/85'
             }`}
           >
             {isAdded ? (
               <>
-                <Check className="w-3.5 h-3.5 text-white" />
+                <Check className="w-4 h-4 text-white" />
                 <span>Added to Bag</span>
               </>
             ) : (
               <>
-                <Plus className="w-3.5 h-3.5 text-[#F5B301]" />
+                <Plus className="w-4 h-4 text-[#F5B301]" />
                 <span>Add to Bag</span>
               </>
             )}

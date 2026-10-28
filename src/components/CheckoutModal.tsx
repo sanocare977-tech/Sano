@@ -236,8 +236,10 @@ sano. — Everything for little ones.`;
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-[#1F2A44]/60 hover:text-[#1F2A44] hover:bg-[#1F2A44]/5 cursor-pointer"
+            className="w-12 h-12 min-w-[48px] min-h-[48px] rounded-full flex items-center justify-center text-[#1F2A44]/60 hover:text-[#1F2A44] hover:bg-[#1F2A44]/5 active:scale-95 transition-all cursor-pointer"
+            aria-label="Close checkout modal"
           >
             <X className="w-5 h-5" />
           </button>
@@ -463,10 +465,10 @@ sano. — Everything for little ones.`;
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <label className={`p-3 rounded-xl border cursor-pointer flex items-center gap-3 transition-all ${
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <label className={`clickable-card p-3.5 rounded-xl border cursor-pointer flex items-center gap-3 transition-all min-h-[48px] min-w-[48px] ${
                 customer.paymentMethod === 'cod'
-                  ? 'bg-white border-[#1F2A44] ring-1 ring-[#1F2A44]'
+                  ? 'bg-white border-[#1F2A44] ring-2 ring-[#1F2A44] shadow-xs'
                   : 'bg-white/60 border-[#1F2A44]/15 hover:bg-white'
               }`}>
                 <input
@@ -475,7 +477,7 @@ sano. — Everything for little ones.`;
                   value="cod"
                   checked={customer.paymentMethod === 'cod'}
                   onChange={() => setCustomer({ ...customer, paymentMethod: 'cod' })}
-                  className="accent-[#1F2A44]"
+                  className="w-5 h-5 min-w-[20px] min-h-[20px] accent-[#1F2A44] cursor-pointer"
                 />
                 <div>
                   <span className="block text-xs font-bold text-[#1F2A44]">Cash on Delivery</span>
@@ -483,9 +485,9 @@ sano. — Everything for little ones.`;
                 </div>
               </label>
 
-              <label className={`p-3 rounded-xl border cursor-pointer flex items-center gap-3 transition-all ${
+              <label className={`clickable-card p-3.5 rounded-xl border cursor-pointer flex items-center gap-3 transition-all min-h-[48px] min-w-[48px] ${
                 customer.paymentMethod === 'fonepay_qr'
-                  ? 'bg-white border-[#1F2A44] ring-1 ring-[#1F2A44]'
+                  ? 'bg-white border-[#1F2A44] ring-2 ring-[#1F2A44] shadow-xs'
                   : 'bg-white/60 border-[#1F2A44]/15 hover:bg-white'
               }`}>
                 <input
@@ -494,7 +496,7 @@ sano. — Everything for little ones.`;
                   value="fonepay_qr"
                   checked={customer.paymentMethod === 'fonepay_qr'}
                   onChange={() => setCustomer({ ...customer, paymentMethod: 'fonepay_qr' })}
-                  className="accent-[#1F2A44]"
+                  className="w-5 h-5 min-w-[20px] min-h-[20px] accent-[#1F2A44] cursor-pointer"
                 />
                 <div>
                   <span className="block text-xs font-bold text-[#1F2A44]">FonePay QR</span>
@@ -502,9 +504,9 @@ sano. — Everything for little ones.`;
                 </div>
               </label>
 
-              <label className={`p-3 rounded-xl border cursor-pointer flex items-center gap-3 transition-all ${
+              <label className={`clickable-card p-3.5 rounded-xl border cursor-pointer flex items-center gap-3 transition-all min-h-[48px] min-w-[48px] ${
                 customer.paymentMethod === 'esewa'
-                  ? 'bg-white border-[#1F2A44] ring-1 ring-[#1F2A44]'
+                  ? 'bg-white border-[#1F2A44] ring-2 ring-[#1F2A44] shadow-xs'
                   : 'bg-white/60 border-[#1F2A44]/15 hover:bg-white'
               }`}>
                 <input
@@ -513,7 +515,7 @@ sano. — Everything for little ones.`;
                   value="esewa"
                   checked={customer.paymentMethod === 'esewa'}
                   onChange={() => setCustomer({ ...customer, paymentMethod: 'esewa' })}
-                  className="accent-[#1F2A44]"
+                  className="w-5 h-5 min-w-[20px] min-h-[20px] accent-[#1F2A44] cursor-pointer"
                 />
                 <div>
                   <span className="block text-xs font-bold text-[#1F2A44]">eSewa / Khalti</span>
@@ -524,15 +526,15 @@ sano. — Everything for little ones.`;
 
             {/* Gifting mode */}
             <div className="pt-2">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
+              <label className="checkbox-label flex items-center gap-3 cursor-pointer select-none min-h-[48px] min-w-[48px] p-2 rounded-xl hover:bg-white/40 transition-colors">
                 <input
                   type="checkbox"
                   checked={customer.isGift}
                   onChange={(e) => setCustomer({ ...customer, isGift: e.target.checked })}
-                  className="w-4 h-4 rounded text-[#1F2A44] accent-[#1F2A44]"
+                  className="w-5 h-5 min-w-[20px] min-h-[20px] rounded text-[#1F2A44] accent-[#1F2A44] cursor-pointer"
                 />
                 <span className="text-xs font-bold text-[#1F2A44] flex items-center gap-1.5">
-                  <Gift className="w-3.5 h-3.5 text-[#F5B301]" />
+                  <Gift className="w-4 h-4 text-[#F5B301]" />
                   Is this a gift for a niece, nephew, or friend's baby?
                 </span>
               </label>

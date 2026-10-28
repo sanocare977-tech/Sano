@@ -28,7 +28,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       onClick={() => onViewDetails(product)}
-      className="group relative flex flex-col bg-white rounded-2xl border border-[#1F2A44]/12 overflow-hidden transition-all hover:border-[#1F2A44]/30 cursor-pointer text-[#1F2A44]"
+      className="clickable-card group relative flex flex-col bg-white rounded-2xl border border-[#1F2A44]/12 overflow-hidden transition-all hover:border-[#1F2A44]/30 cursor-pointer text-[#1F2A44] min-h-[48px] min-w-[48px]"
     >
       {/* Product Image Area */}
       <div className="relative aspect-square w-full bg-[#FFF6E9] overflow-hidden">
@@ -58,20 +58,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
 
-        {/* Quick View Floating Button */}
-        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold bg-[#1F2A44]/90 text-[#FFF6E9] rounded-full backdrop-blur-xs">
-            <Eye className="w-3.5 h-3.5 text-[#F5B301]" />
+        {/* Quick View Floating Button - visible with touch-friendly 48px target on mobile, hover on desktop */}
+        <div className="absolute bottom-3 right-3 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[48px] min-w-[48px] text-xs font-bold bg-[#1F2A44]/90 text-[#FFF6E9] rounded-full backdrop-blur-xs shadow-sm">
+            <Eye className="w-4 h-4 text-[#F5B301]" />
             Details
           </span>
         </div>
       </div>
 
       {/* Card Content */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+      <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
         <div className="space-y-1.5">
           {/* Metadata: Clean unboxed text with dot separator */}
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#1F2A44]/60">
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#1F2A44]/65">
             <span>{product.ageStage === 'pregnancy' ? 'Maternity' : product.deliveryTime.split(' in ')[0]}</span>
             <span aria-hidden="true">·</span>
             <span>{product.materials.split(',')[0]}</span>
@@ -87,12 +87,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </p>
         </div>
 
-        {/* Size Selection Chips - Showing both age & height in cm */}
-        <div className="space-y-1.5 pt-1" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center justify-between text-[11px] font-semibold text-[#1F2A44]/60">
-            <span>Select Size & Height:</span>
+        {/* Size Selection Chips - Upgraded to minimum 48px touch-friendly hit areas */}
+        <div className="space-y-2 pt-1" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center justify-between text-xs font-semibold text-[#1F2A44]/70">
+            <span>Select Size &amp; Height:</span>
+            <span className="text-[11px] text-[#5DAA7A] font-bold">Standard Sano Fit</span>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {product.variants.map((v) => {
               const isSelected = selectedVariant === v.size;
               return (
@@ -100,11 +101,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   key={v.size}
                   type="button"
                   onClick={() => setSelectedVariant(v.size)}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-full transition-all cursor-pointer min-h-[32px] ${
+                  className={`min-h-[48px] min-w-[48px] px-3.5 py-2.5 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center border active:scale-95 ${
                     isSelected
-                      ? 'bg-[#1F2A44] text-[#FFF6E9]'
-                      : 'bg-[#FFF6E9] text-[#1F2A44] hover:bg-[#EAE0D0]'
+                      ? 'bg-[#1F2A44] text-[#FFF6E9] border-[#1F2A44] shadow-xs'
+                      : 'bg-[#FFF6E9] text-[#1F2A44] border-[#1F2A44]/15 hover:bg-[#EAE0D0] hover:border-[#1F2A44]/30'
                   }`}
+                  aria-pressed={isSelected}
+                  aria-label={`Size ${v.size}`}
                 >
                   {v.size}
                 </button>
@@ -113,9 +116,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Bottom Bar: Price & Add to Bag */}
-        <div className="pt-3 border-t border-[#1F2A44]/10 flex items-center justify-between gap-2">
-          <div>
+        {/* Bottom Bar: Price & Add to Bag with min 48px touch targets */}
+        <div className="pt-3 border-t border-[#1F2A44]/10 flex items-center justify-between gap-3">
+          <div className="min-w-0">
             <div className="flex items-baseline gap-1.5">
               <span className="text-xs text-[#1F2A44]/60 font-semibold">Rs.</span>
               <span className="font-heading text-lg sm:text-xl font-bold text-[#1F2A44] tabular-nums">
@@ -123,7 +126,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             </div>
             {product.originalPriceNPR && (
-              <span className="text-[11px] text-[#1F2A44]/40 line-through tabular-nums">
+              <span className="text-[11px] text-[#1F2A44]/40 line-through tabular-nums block">
                 Rs. {product.originalPriceNPR.toLocaleString()}
               </span>
             )}
@@ -132,7 +135,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <button
             type="button"
             onClick={handleAdd}
-            className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-bold rounded-full transition-all cursor-pointer min-h-[44px] ${
+            className={`inline-flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm font-bold rounded-full transition-all cursor-pointer min-h-[48px] min-w-[120px] shrink-0 shadow-xs ${
               addedAnimation
                 ? 'bg-[#5DAA7A] text-white'
                 : 'bg-[#1F2A44] text-[#FFF6E9] hover:bg-[#1F2A44]/90 active:scale-95'

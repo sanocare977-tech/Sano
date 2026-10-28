@@ -47,3 +47,85 @@ h1, h2, h3, h4, .font-heading {
   outline: 2px solid #F5B301;
   outline-offset: 2px;
 }
+
+/* ==========================================================================
+   GLOBAL TOUCH-FRIENDLY ACCESSIBILITY STANDARDS (WCAG 2.5.5 / 48px Target Size)
+   Ensuring all buttons, checkboxes, radio controls, and clickable cards
+   have a minimum height and width of 48px to eliminate mobile fat-finger errors.
+   ========================================================================== */
+
+/* 1. Global Buttons & Action Elements */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"] {
+  min-height: 48px;
+  min-width: 48px;
+  touch-action: manipulation;
+}
+
+/* Ensure buttons center their content cleanly within the 48px touch envelope */
+button,
+[role="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. Checkboxes & Radio Controls */
+input[type="checkbox"],
+input[type="radio"] {
+  min-width: 24px;
+  min-height: 24px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  position: relative;
+  touch-action: manipulation;
+}
+
+/* Expanded invisible pseudo hitbox guaranteeing minimum 48px x 48px interactive target */
+input[type="checkbox"]::after,
+input[type="radio"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  pointer-events: auto;
+}
+
+/* Interactive label containers wrapping checkboxes/radios get minimum 48px touch height */
+label:has(input[type="checkbox"]),
+label:has(input[type="radio"]),
+label.checkbox-label,
+label.radio-label {
+  min-height: 48px;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 3. Clickable Cards & Interactive Containers */
+.clickable-card,
+[data-clickable="true"],
+.card-clickable,
+a[role="button"] {
+  min-height: 48px;
+  min-width: 48px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Utility classes for explicit markup */
+.min-touch,
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}

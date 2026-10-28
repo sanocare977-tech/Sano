@@ -168,23 +168,23 @@ export const PasniBundleBuilder: React.FC<PasniBundleBuilderProps> = ({
             <div
               key={item.id}
               onClick={() => toggleItem(item.id)}
-              className={`relative rounded-2xl p-5 border-2 transition-all cursor-pointer flex flex-col justify-between ${
+              className={`clickable-card min-h-[48px] min-w-[48px] relative rounded-2xl p-5 border-2 transition-all cursor-pointer flex flex-col justify-between ${
                 isSelected
                   ? 'border-[#1F2A44] bg-[#FFF6E9]/40 shadow-sm'
                   : 'border-[#1F2A44]/15 bg-white opacity-70 hover:opacity-100'
               }`}
             >
-              {/* Checkbox badge */}
+              {/* Checkbox badge with comfortable tap target */}
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white border border-[#1F2A44]/20 text-[#1F2A44]">
                   {item.category === 'outfit' ? '1. Ceremony Outfit' : item.category === 'utensils' ? '2. Silver/Brass Thali' : '3. Engraved Keepsake'}
                 </span>
                 <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
+                  className={`w-9 h-9 min-w-[36px] min-h-[36px] rounded-full flex items-center justify-center transition-colors ${
                     isSelected ? 'bg-[#1F2A44] text-[#FFF6E9]' : 'border-2 border-[#1F2A44]/30'
                   }`}
                 >
-                  {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                  {isSelected && <Check className="w-4 h-4 stroke-[3]" />}
                 </div>
               </div>
 
@@ -303,7 +303,7 @@ export const PasniBundleBuilder: React.FC<PasniBundleBuilderProps> = ({
             type="button"
             disabled={activeCount === 0}
             onClick={handleAddBundleToCart}
-            className={`w-full sm:w-auto px-6 py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`w-full sm:w-auto px-6 py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[48px] min-w-[48px] ${
               activeCount > 0
                 ? 'bg-[#F5B301] text-[#1F2A44] hover:bg-[#F5B301]/90 shadow-md active:scale-95'
                 : 'bg-white/20 text-white/40 cursor-not-allowed'
